@@ -36,14 +36,14 @@ public final class SplashActivity extends AppActivity {
     protected void initView() {
         mLottieView = findViewById(R.id.lav_splash_lottie);
         mDebugView = findViewById(R.id.iv_splash_debug);
-//        ThreadPoolManager.getInstance().execute(r);// 用自己的闪屏  不用现有动画
+        ThreadPoolManager.getInstance().execute(r);// 用自己的闪屏  不用现有动画
         // 设置动画监听
         mLottieView.addAnimatorListener(new AnimatorListenerAdapter() {
 
             @Override
             public void onAnimationEnd(Animator animation) {
                 mLottieView.removeAnimatorListener(this);
-                ThreadPoolManager.getInstance().execute(r);// 用现有动画
+//                ThreadPoolManager.getInstance().execute(r);// 用现有动画
             }
         });
     }
@@ -52,12 +52,12 @@ public final class SplashActivity extends AppActivity {
         @Override
         public void run() {
 //             如果想用自己的闪屏  不用现有动画 可打开延迟注释  并隐藏xml里的控件 android:visibility="gone"
-            /*try {
+            try {
                 Thread.sleep(2000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
-            }*/
-            BrowserActivity.start(getContext(), "https://www.52car.xyz/");
+            }
+            BrowserActivity.start(getContext(), "");//TODO url 绝对不可提交到版本库
             finish();
         }
     };

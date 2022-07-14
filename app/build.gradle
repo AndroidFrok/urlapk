@@ -9,7 +9,7 @@ android {
     defaultConfig {
 
         // 无痛修改包名：https://www.jianshu.com/p/17327e191d2e
-        applicationId 'xyz.car52.app'
+        applicationId 'com.xiongmaojidixmjd.debug'
 
         // 仅保留中文语种的资源
         resConfigs 'zh'
