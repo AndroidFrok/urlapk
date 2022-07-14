@@ -176,9 +176,9 @@ dependencies {
     implementation 'com.github.Baseflow:PhotoView:2.3.0'
 
     // Bugly 异常捕捉：https://bugly.qq.com/docs/user-guide/instruction-manual-android/?v=20190418140644
-    implementation 'com.tencent.bugly:crashreport:3.4.4'
-    implementation 'com.tencent.bugly:nativecrashreport:3.9.2'
-
+//    implementation 'com.tencent.bugly:crashreport:3.4.4'
+//    implementation 'com.tencent.bugly:nativecrashreport:3.9.2'
+    implementation "com.tencent.bugly:crashreport_upgrade:1.5.23"
     // 动画解析库：https://github.com/airbnb/lottie-android
     // 动画资源：https://lottiefiles.com、https://icons8.com/animated-icons
     implementation 'com.airbnb.android:lottie:4.1.0'

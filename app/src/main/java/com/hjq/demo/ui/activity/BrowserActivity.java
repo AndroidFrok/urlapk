@@ -23,12 +23,13 @@ import com.hjq.demo.widget.StatusLayout;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
+import com.tencent.bugly.beta.Beta;
 
 /**
- *    author : Android 轮子哥
- *    github : https://github.com/getActivity/AndroidProject
- *    time   : 2018/10/18
- *    desc   : 浏览器界面
+ * author : Android 轮子哥
+ * github : https://github.com/getActivity/AndroidProject
+ * time   : 2018/10/18
+ * desc   : 浏览器界面
  */
 public final class BrowserActivity extends AppActivity
         implements StatusAction, OnRefreshListener {
@@ -61,6 +62,7 @@ public final class BrowserActivity extends AppActivity
 
     @Override
     protected void initView() {
+        Beta.checkAppUpgrade();
         mStatusLayout = findViewById(R.id.hl_browser_hint);
         mProgressBar = findViewById(R.id.pb_browser_progress);
         mRefreshLayout = findViewById(R.id.sl_browser_refresh);
