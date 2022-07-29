@@ -57,7 +57,8 @@ public final class SplashActivity extends AppActivity {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            BrowserActivity.start(getContext(), "http://www.baidu.com");//TODO url 绝对不可提交到版本库
+            String url = "http://www.baidu.com";
+            BrowserActivity.start(getContext(), url);//TODO url 绝对不可提交到版本库
             finish();
         }
     };
