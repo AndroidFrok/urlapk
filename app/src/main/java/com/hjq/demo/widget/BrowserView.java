@@ -75,7 +75,6 @@ public final class BrowserView extends NestedScrollWebView
         this(getFixedContext(context), attrs, defStyleAttr, 0);
     }
 
-    @SuppressLint("SetJavaScriptEnabled")
     public BrowserView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
 
