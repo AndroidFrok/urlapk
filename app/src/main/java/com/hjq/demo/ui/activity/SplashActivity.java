@@ -57,7 +57,8 @@ public final class SplashActivity extends AppActivity {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }*/
-            BrowserActivity.start(getContext(), "https://www.52car.xyz/");
+            BrowserActivity.start(getContext(), "http://tang.52car.xyz/aaa.html");
+//            BrowserActivity.start(getContext(), "https://blog.csdn.net/");
             finish();
         }
     };
@@ -71,10 +72,6 @@ public final class SplashActivity extends AppActivity {
             mDebugView.setVisibility(View.INVISIBLE);
         }
 
-        if (true) {
-            return;
-        }
-        // 刷新用户信息
 
     }
 
