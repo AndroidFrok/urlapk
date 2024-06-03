@@ -36,29 +36,31 @@ public final class SplashActivity extends AppActivity {
     protected void initView() {
         mLottieView = findViewById(R.id.lav_splash_lottie);
         mDebugView = findViewById(R.id.iv_splash_debug);
-//        ThreadPoolManager.getInstance().execute(r);// 用自己的闪屏  不用现有动画
+        ThreadPoolManager.getInstance().execute(r);// 用自己的闪屏  不用现有动画
         // 设置动画监听
-        mLottieView.addAnimatorListener(new AnimatorListenerAdapter() {
+        /*mLottieView.addAnimatorListener(new AnimatorListenerAdapter() {
 
             @Override
             public void onAnimationEnd(Animator animation) {
                 mLottieView.removeAnimatorListener(this);
                 ThreadPoolManager.getInstance().execute(r);// 用现有动画
             }
-        });
+        });*/
     }
 
     Runnable r = new Runnable() {
         @Override
         public void run() {
 //             如果想用自己的闪屏  不用现有动画 可打开延迟注释  并隐藏xml里的控件 android:visibility="gone"
-            /*try {
-                Thread.sleep(2000);
+            try {
+                Thread.sleep(400);
             } catch (InterruptedException e) {
                 e.printStackTrace();
-            }*/
-            BrowserActivity.start(getContext(), "http://tang.52car.xyz/aaa.html");
-//            BrowserActivity.start(getContext(), "https://blog.csdn.net/");
+            }
+//            BrowserActivity.start(getContext(), "");
+            String u = "https://haoka.shuangxinyun.com//agent/qjaKzzWS";
+//                String u = "https://ssmlf.customer.jhwangluo.com/uniapp";
+            BrowserActivity.start(getContext(), u);
             finish();
         }
     };
@@ -96,8 +98,7 @@ public final class SplashActivity extends AppActivity {
         if (!isTaskRoot()) {
             Intent intent = getIntent();
             // 如果当前 Activity 是通过桌面图标启动进入的
-            if (intent != null && intent.hasCategory(Intent.CATEGORY_LAUNCHER)
-                    && Intent.ACTION_MAIN.equals(intent.getAction())) {
+            if (intent != null && intent.hasCategory(Intent.CATEGORY_LAUNCHER) && Intent.ACTION_MAIN.equals(intent.getAction())) {
                 // 对当前 Activity 执行销毁操作，避免重复实例化入口
                 finish();
                 return;

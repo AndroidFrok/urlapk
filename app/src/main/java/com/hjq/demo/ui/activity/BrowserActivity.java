@@ -22,6 +22,7 @@ import com.hjq.demo.aop.CheckNet;
 import com.hjq.demo.aop.Log;
 import com.hjq.demo.app.AppActivity;
 import com.hjq.demo.manager.ThreadPoolManager;
+import com.hjq.demo.ui.adapter.JSHook;
 import com.hjq.demo.widget.BrowserView;
 import com.hjq.demo.widget.StatusLayout;
 import com.hjq.permissions.OnPermissionCallback;
@@ -81,12 +82,20 @@ public final class BrowserActivity extends AppActivity implements StatusAction, 
         mProgressBar = findViewById(R.id.pb_browser_progress);
         mRefreshLayout = findViewById(R.id.sl_browser_refresh);
         mBrowserView = findViewById(R.id.wv_browser_view);
+        mBrowserView.addJavascriptInterface(new JSHook(), "hook");
+
+        findViewById(R.id.test).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+//                mBrowserView.loadUrl(u);
+            }
+        });
 
         // 设置 WebView 生命管控
         mBrowserView.setLifecycleOwner(this);
         // 设置网页刷新监听
         mRefreshLayout.setOnRefreshListener(this);
-//        mBrowserView.addJavascriptInterface(new JSHook(), "hook");
     }
 
     @Override

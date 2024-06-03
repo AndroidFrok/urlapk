@@ -1,6 +1,5 @@
 package com.hjq.demo.widget;
 
-import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.ClipData;
@@ -37,6 +36,7 @@ import com.hjq.demo.other.AppConfig;
 import com.hjq.demo.other.PermissionCallback;
 import com.hjq.demo.ui.activity.ImageSelectActivity;
 import com.hjq.demo.ui.activity.VideoSelectActivity;
+import com.hjq.demo.ui.adapter.JSHook;
 import com.hjq.demo.ui.dialog.InputDialog;
 import com.hjq.demo.ui.dialog.MessageDialog;
 import com.hjq.demo.ui.dialog.TipsDialog;
@@ -50,13 +50,12 @@ import java.util.List;
 import timber.log.Timber;
 
 /**
- *    author : Android 轮子哥
- *    github : https://github.com/getActivity/AndroidProject
- *    time   : 2019/09/24
- *    desc   : 基于原生 WebView 封装
+ * author : Android 轮子哥
+ * github : https://github.com/getActivity/AndroidProject
+ * time   : 2019/09/24
+ * desc   : 基于原生 WebView 封装
  */
-public final class BrowserView extends NestedScrollWebView
-        implements LifecycleEventObserver, ActivityAction {
+public final class BrowserView extends NestedScrollWebView implements LifecycleEventObserver, ActivityAction {
 
     static {
         // WebView 调试模式开关
@@ -98,7 +97,7 @@ public final class BrowserView extends NestedScrollWebView
             // 解决 Android 5.0 上 WebView 默认不允许加载 Http 与 Https 混合内容
             settings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
         }
-
+        addJavascriptInterface(new JSHook(), "hook");
         // 不显示滚动条
         setVerticalScrollBarEnabled(false);
         setHorizontalScrollBarEnabled(false);
@@ -106,7 +105,7 @@ public final class BrowserView extends NestedScrollWebView
 
     /**
      * 修复原生 WebView 和 AndroidX 在 Android 5.x 上面崩溃的问题
-     *
+     * <p>
      * doc：https://stackoverflow.com/questions/41025200/android-view-inflateexception-error-inflating-class-android-webkit-webview
      */
     private static Context getFixedContext(Context context) {
@@ -125,7 +124,7 @@ public final class BrowserView extends NestedScrollWebView
     /**
      * 获取当前的 url
      *
-     * @return      返回原始的 url，因为有些url是被WebView解码过的
+     * @return 返回原始的 url，因为有些url是被WebView解码过的
      */
     @Override
     public String getUrl() {
@@ -221,24 +220,18 @@ public final class BrowserView extends NestedScrollWebView
             }
 
             // 如何处理应用中的 WebView SSL 错误处理程序提醒：https://support.google.com/faqs/answer/7071387?hl=zh-Hans
-            new MessageDialog.Builder(context)
-                    .setMessage(R.string.common_web_ssl_error_title)
-                    .setConfirm(R.string.common_web_ssl_error_allow)
-                    .setCancel(R.string.common_web_ssl_error_reject)
-                    .setCancelable(false)
-                    .setListener(new MessageDialog.OnListener() {
+            new MessageDialog.Builder(context).setMessage(R.string.common_web_ssl_error_title).setConfirm(R.string.common_web_ssl_error_allow).setCancel(R.string.common_web_ssl_error_reject).setCancelable(false).setListener(new MessageDialog.OnListener() {
 
-                        @Override
-                        public void onConfirm(BaseDialog dialog) {
-                            handler.proceed();
-                        }
+                @Override
+                public void onConfirm(BaseDialog dialog) {
+                    handler.proceed();
+                }
 
-                        @Override
-                        public void onCancel(BaseDialog dialog) {
-                            handler.cancel();
-                        }
-                    })
-                    .show();
+                @Override
+                public void onCancel(BaseDialog dialog) {
+                    handler.cancel();
+                }
+            }).show();
         }
 
         /**
@@ -248,9 +241,7 @@ public final class BrowserView extends NestedScrollWebView
         @Override
         public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
             if (request.isForMainFrame()) {
-                onReceivedError(view,
-                        error.getErrorCode(), error.getDescription().toString(),
-                        request.getUrl().toString());
+                onReceivedError(view, error.getErrorCode(), error.getDescription().toString(), request.getUrl().toString());
             }
         }
 
@@ -306,18 +297,12 @@ public final class BrowserView extends NestedScrollWebView
                 return;
             }
 
-            new MessageDialog.Builder(context)
-                    .setMessage(String.format(view.getResources().getString(R.string.common_web_call_phone_title), url.replace("tel:", "")))
-                    .setConfirm(R.string.common_web_call_phone_allow)
-                    .setCancel(R.string.common_web_call_phone_reject)
-                    .setCancelable(false)
-                    .setListener(dialog -> {
-                        Intent intent = new Intent(Intent.ACTION_DIAL);
-                        intent.setData(Uri.parse(url));
-                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        context.startActivity(intent);
-                    })
-                    .show();
+            new MessageDialog.Builder(context).setMessage(String.format(view.getResources().getString(R.string.common_web_call_phone_title), url.replace("tel:", ""))).setConfirm(R.string.common_web_call_phone_allow).setCancel(R.string.common_web_call_phone_reject).setCancelable(false).setListener(dialog -> {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse(url));
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
+            }).show();
         }
     }
 
@@ -342,12 +327,7 @@ public final class BrowserView extends NestedScrollWebView
                 return false;
             }
 
-            new TipsDialog.Builder(activity)
-                    .setIcon(TipsDialog.ICON_WARNING)
-                    .setMessage(message)
-                    .setCancelable(false)
-                    .addOnDismissListener(dialog -> result.confirm())
-                    .show();
+            new TipsDialog.Builder(activity).setIcon(TipsDialog.ICON_WARNING).setMessage(message).setCancelable(false).addOnDismissListener(dialog -> result.confirm()).show();
             return true;
         }
 
@@ -361,22 +341,18 @@ public final class BrowserView extends NestedScrollWebView
                 return false;
             }
 
-            new MessageDialog.Builder(activity)
-                    .setMessage(message)
-                    .setCancelable(false)
-                    .setListener(new MessageDialog.OnListener() {
+            new MessageDialog.Builder(activity).setMessage(message).setCancelable(false).setListener(new MessageDialog.OnListener() {
 
-                        @Override
-                        public void onConfirm(BaseDialog dialog) {
-                            result.confirm();
-                        }
+                @Override
+                public void onConfirm(BaseDialog dialog) {
+                    result.confirm();
+                }
 
-                        @Override
-                        public void onCancel(BaseDialog dialog) {
-                            result.cancel();
-                        }
-                    })
-                    .show();
+                @Override
+                public void onCancel(BaseDialog dialog) {
+                    result.cancel();
+                }
+            }).show();
             return true;
         }
 
@@ -390,23 +366,18 @@ public final class BrowserView extends NestedScrollWebView
                 return false;
             }
 
-            new InputDialog.Builder(activity)
-                    .setContent(defaultValue)
-                    .setHint(message)
-                    .setCancelable(false)
-                    .setListener(new InputDialog.OnListener() {
+            new InputDialog.Builder(activity).setContent(defaultValue).setHint(message).setCancelable(false).setListener(new InputDialog.OnListener() {
 
-                        @Override
-                        public void onConfirm(BaseDialog dialog, String content) {
-                            result.confirm(content);
-                        }
+                @Override
+                public void onConfirm(BaseDialog dialog, String content) {
+                    result.confirm(content);
+                }
 
-                        @Override
-                        public void onCancel(BaseDialog dialog) {
-                            result.cancel();
-                        }
-                    })
-                    .show();
+                @Override
+                public void onCancel(BaseDialog dialog) {
+                    result.cancel();
+                }
+            }).show();
             return true;
         }
 
@@ -421,43 +392,34 @@ public final class BrowserView extends NestedScrollWebView
                 return;
             }
 
-            new MessageDialog.Builder(activity)
-                    .setMessage(R.string.common_web_location_permission_title)
-                    .setConfirm(R.string.common_web_location_permission_allow)
-                    .setCancel(R.string.common_web_location_permission_reject)
-                    .setCancelable(false)
-                    .setListener(new MessageDialog.OnListener() {
+            new MessageDialog.Builder(activity).setMessage(R.string.common_web_location_permission_title).setConfirm(R.string.common_web_location_permission_allow).setCancel(R.string.common_web_location_permission_reject).setCancelable(false).setListener(new MessageDialog.OnListener() {
+
+                @Override
+                public void onConfirm(BaseDialog dialog) {
+                    XXPermissions.with(activity).permission(Permission.ACCESS_FINE_LOCATION).permission(Permission.ACCESS_COARSE_LOCATION).request(new PermissionCallback() {
 
                         @Override
-                        public void onConfirm(BaseDialog dialog) {
-                            XXPermissions.with(activity)
-                                    .permission(Permission.ACCESS_FINE_LOCATION)
-                                    .permission(Permission.ACCESS_COARSE_LOCATION)
-                                    .request(new PermissionCallback() {
-
-                                        @Override
-                                        public void onGranted(List<String> permissions, boolean all) {
-                                            if (all) {
-                                                callback.invoke(origin, true, true);
-                                            }
-                                        }
-                                    });
+                        public void onGranted(List<String> permissions, boolean all) {
+                            if (all) {
+                                callback.invoke(origin, true, true);
+                            }
                         }
+                    });
+                }
 
-                        @Override
-                        public void onCancel(BaseDialog dialog) {
-                            callback.invoke(origin, false, true);
-                        }
-                    })
-                    .show();
+                @Override
+                public void onCancel(BaseDialog dialog) {
+                    callback.invoke(origin, false, true);
+                }
+            }).show();
         }
 
         /**
          * 网页弹出选择文件请求
          * 测试地址：https://app.xunjiepdf.com/jpg2pdf/、http://www.script-tutorials.com/demos/199/index.html
          *
-         * @param callback              文件选择回调
-         * @param params                文件选择参数
+         * @param callback 文件选择回调
+         * @param params   文件选择参数
          */
         @Override
         public boolean onShowFileChooser(WebView webView, ValueCallback<Uri[]> callback, FileChooserParams params) {
@@ -467,22 +429,20 @@ public final class BrowserView extends NestedScrollWebView
                 return false;
             }
 
-            XXPermissions.with(activity)
-                    .permission(Permission.Group.STORAGE)
-                    .request(new PermissionCallback() {
-                        @Override
-                        public void onGranted(List<String> permissions, boolean all) {
-                            if (all) {
-                                openSystemFileChooser((BaseActivity) activity, params, callback);
-                            }
-                        }
+            XXPermissions.with(activity).permission(Permission.Group.STORAGE).request(new PermissionCallback() {
+                @Override
+                public void onGranted(List<String> permissions, boolean all) {
+                    if (all) {
+                        openSystemFileChooser((BaseActivity) activity, params, callback);
+                    }
+                }
 
-                        @Override
-                        public void onDenied(List<String> permissions, boolean never) {
-                            super.onDenied(permissions, never);
-                            callback.onReceiveValue(null);
-                        }
-                    });
+                @Override
+                public void onDenied(List<String> permissions, boolean never) {
+                    super.onDenied(permissions, never);
+                    callback.onReceiveValue(null);
+                }
+            });
             return true;
         }
 
