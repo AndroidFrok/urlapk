@@ -16,11 +16,11 @@
         app:title="@string/web_title" />
 
     <Button
-        android:visibility="gone"
         android:id="@+id/test"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="跳转" />
+        android:text="跳转"
+        android:visibility="gone" />
 
     <ProgressBar
         android:id="@+id/pb_browser_progress"
@@ -28,7 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_3"
         android:progressDrawable="@drawable/progress_gradient_bg"
-        android:visibility="gone" />
+        android:visibility="visible" />
 
     <com.hjq.demo.widget.StatusLayout
         android:id="@+id/hl_browser_hint"

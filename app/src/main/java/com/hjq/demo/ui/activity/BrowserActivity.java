@@ -262,7 +262,7 @@ public final class BrowserActivity extends AppActivity implements StatusAction, 
          */
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
-//            mProgressBar.setVisibility(View.VISIBLE);
+            mProgressBar.setVisibility(View.VISIBLE);
         }
 
         /**
