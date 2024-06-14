@@ -15,6 +15,7 @@ import androidx.lifecycle.LifecycleOwner;
 import com.hjq.bar.TitleBar;
 import com.hjq.demo.R;
 import com.hjq.demo.aop.Log;
+import com.hjq.demo.http.RequestHandler;
 import com.hjq.demo.http.glide.GlideApp;
 import com.hjq.demo.manager.ActivityManager;
 import com.hjq.demo.other.AppConfig;
@@ -123,7 +124,7 @@ public final class AppApplication extends Application {
          OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .build();
 
-       /* EasyConfig.with(okHttpClient)
+        EasyConfig.with(okHttpClient)
                 // 是否打印日志
                 .setLogEnabled(AppConfig.isLogEnable())
                 // 设置服务器配置
@@ -141,7 +142,7 @@ public final class AppApplication extends Application {
                     // 添加全局请求参数
                     // params.put("6666666", "6666666");
                 })
-                .into();*/
+                .into();
 
         // 设置 Json 解析容错监听
         GsonFactory.setJsonCallback((typeToken, fieldName, jsonToken) -> {
