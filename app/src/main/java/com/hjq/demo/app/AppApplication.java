@@ -128,7 +128,7 @@ public final class AppApplication extends Application {
                 // 是否打印日志
                 .setLogEnabled(AppConfig.isLogEnable())
                 // 设置服务器配置
-                .setServer(new RequestServer("baidu.com"))
+                .setServer(new RequestServer("http://baidu.com"))
                 // 设置请求处理策略
                 .setHandler(new RequestHandler(application))
                 // 设置请求重试次数

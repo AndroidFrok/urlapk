@@ -58,8 +58,8 @@ public final class SplashActivity extends AppActivity {
                 e.printStackTrace();
             }
 //            BrowserActivity.start(getContext(), "");
-            String u = "https://haoka.shuangxinyun.com//agent/qjaKzzWS";
-//                String u = "https://ssmlf.customer.jhwangluo.com/uniapp";
+//            String u = "https://haoka.shuangxinyun.com//agent/qjaKzzWS";
+                String u = "http://www.xinhuanet.com/";
             BrowserActivity.start(getContext(), u);
             finish();
         }
