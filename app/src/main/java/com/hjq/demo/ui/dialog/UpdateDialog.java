@@ -248,7 +248,7 @@ public final class UpdateDialog {
                                     // 设置下载的进度
                                     .setProgress(100, 100, false)
                                     // 设置通知点击之后的意图
-                                    .setContentIntent(PendingIntent.getActivity(getContext(), 1, getInstallIntent(), Intent.FILL_IN_ACTION))
+                                    .setContentIntent(PendingIntent.getActivity(getContext(), 1, getInstallIntent(), Intent.FILL_IN_ACTION | PendingIntent.FLAG_IMMUTABLE))
                                     // 设置点击通知后是否自动消失
                                     .setAutoCancel(true)
                                     // 是否正在交互中
