@@ -138,6 +138,8 @@ public final class AppApplication extends Application {
                     headers.put("token", "66666666666");
                     headers.put("deviceOaid", UmengClient.getDeviceOaid());
                     headers.put("versionName", AppConfig.getVersionName());
+                    headers.put("phone", "" + Build.BRAND + "-" + Build.MODEL + "-" + Build.PRODUCT + "-" + Build.BOARD + "-"
+                            + Build.DEVICE + "-Android" + Build.VERSION.RELEASE + "-API" + Build.VERSION.SDK_INT);
                     headers.put("versionCode", String.valueOf(AppConfig.getVersionCode()));
                     // 添加全局请求参数
                     // params.put("6666666", "6666666");
