@@ -54,7 +54,7 @@ android {
             // 代码混淆开关
             minifyEnabled false
             // 签名信息配置
-            signingConfig signingConfigs.config
+//            signingConfig signingConfigs.config
             // 添加清单占位符
             addManifestPlaceholders([
                     'app_name': '@string/app_name'
@@ -85,7 +85,7 @@ android {
             // 代码混淆开关
             minifyEnabled true
             // 签名信息配置
-            signingConfig signingConfigs.config
+//            signingConfig signingConfigs.config
             // 添加清单占位符
             addManifestPlaceholders([
                     'app_name': '@string/app_name'
